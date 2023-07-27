@@ -22,6 +22,7 @@ class SimpleGroupSerializer(serializers.ModelSerializer):
 class SimpleLessonSerializer(serializers.ModelSerializer):
     subject_id = SubjectSerializer(read_only=True)
     lesson_num = LessonRomSerializer(read_only=True)
+    teach_id = serializers.SlugRelatedField(read_only=True, slug_field='first_name')#bu teacher_id ichidan faqat ismini oladi qolgan malumotlari chiqmidi
 
     class Meta:
         model = Lesson
