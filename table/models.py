@@ -30,6 +30,6 @@ class Table(models.Model):
     table_id = models.ForeignKey(TableItem, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.table_id
 

@@ -19,8 +19,8 @@ class LessonRoom(models.Model):
     room_type = models.CharField(choices=Type, max_length=30)
     capacity = models.IntegerField(default=0)
 
-    def __int__(self):
-        return self.room_num
+    def __str__(self):
+        return f'{self.room_num} - {self.room_type}'
 
 
 class Teacher(models.Model):
@@ -29,9 +29,9 @@ class Teacher(models.Model):
     last_name = models.CharField(max_length=30)
     subject_taught = models.CharField(max_length=50)
     Level = (
-        ('1', 'Small degree'),
-        ('2', 'Middle degree'),
-        ('3', 'Big degree')
+        ('Small degree', '1'),
+        ('Middle degree', '2'),
+        ('Big degree', '3')
     )
     level = models.CharField(choices=Level, max_length=40)
     teacher_img = models.ImageField(upload_to='teacher_img/', null=True, blank=True)
@@ -42,13 +42,13 @@ class Teacher(models.Model):
 
 
 class Lesson(models.Model):
-    lesson_num_id = models.ForeignKey(LessonRoom, on_delete=models.CASCADE)
+    lesson_num = models.ForeignKey(LessonRoom, on_delete=models.CASCADE)
     subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
     teach_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     duration = models.IntegerField()
     time = models.CharField(max_length=10)
 
     def __str__(self):
-        return f'{self.lesson_num_id} - {self.duration}'
+        return f"Xona: {self.lesson_num} || Mavzu: {self.subject_id} -> {self.duration}"
 
 
