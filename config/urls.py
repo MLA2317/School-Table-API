@@ -44,7 +44,7 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('group/', include('group.urls')),
     path('lesson/', include('lesson.urls')),
-    # path('table/', include('table.urls')),
+    path('table/', include('table.urls')),
 
 ]
 
