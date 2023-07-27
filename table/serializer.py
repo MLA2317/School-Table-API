@@ -29,7 +29,7 @@ class SimpleLessonSerializer(serializers.ModelSerializer):
         fields = ('id', 'lesson_num', 'subject_id', 'teach_id', 'duration', 'time')
 
 
-class TableItemSerializer(serializers.ModelSerializer):
+class TableItemGETSerializer(serializers.ModelSerializer):
     group = SimpleGroupSerializer(read_only=True)
     lesson = SimpleLessonSerializer(read_only=True)
     week = WeekSerializer(read_only=True)
@@ -38,3 +38,12 @@ class TableItemSerializer(serializers.ModelSerializer):
         model = TableItem
         fields = ('id', 'shift', 'week', 'group', 'lesson', 'time')
 
+
+class TableItemPOSTSerializer(serializers.ModelSerializer):
+    group = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all())
+    lesson = serializers.PrimaryKeyRelatedField(queryset=Lesson.objects.all())
+    week = serializers.PrimaryKeyRelatedField(queryset=Week.objects.all())
+
+    class Meta:
+        model = TableItem
+        fields = ('id', 'shift', 'week', 'group', 'lesson', 'time')

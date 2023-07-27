@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .serializer import WeekSerializer, TableItemSerializer
+from django.shortcuts import render, get_object_or_404
+from .serializer import WeekSerializer, TableItemPOSTSerializer, TableItemGETSerializer
 from .models import Week, TableItem, Table
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
@@ -11,16 +11,30 @@ class WeekListCreate(generics.ListCreateAPIView):
     serializer_class = WeekSerializer
 
 
-class TableItemListCreate(APIView):
+class TableItemListApiView(generics.ListAPIView):
+    queryset = TableItem.objects.all()
+    serializer_class = TableItemGETSerializer
 
-    def get(self, request):
-        table_items = TableItem.objects.all()
-        serializer = TableItemSerializer(table_items, many=True)
-        return Response(serializer.data)
 
-    def post(self, request):
-        serializer = TableItemSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class TableItemCreateApiView(generics.CreateAPIView):
+    queryset = TableItem.objects.all()
+    serializer_class = TableItemPOSTSerializer
+
+    # def get_queryset(self):
+    #     table_item = TableItem.objects.all()
+    #     return table_item
+    #
+    # def get(self, request, *args, **kwargs):
+    #     try:
+    #         table_item_id = request.query_params["id"]
+    #         if table_item_id != None:
+    #             table_item = TableItem.objects.get(id=table_item_id)
+    #             serializer = TableItemSerializer(table_item)
+    #     except:
+    #         table_item = self.get_queryset()
+    #         serializer = TableItemSerializer(table_item, many=True)
+    #
+    #     return Response(serializer.data)
+
+
+
