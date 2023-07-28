@@ -12,7 +12,7 @@ class Group(models.Model):
 
 
 class Student(models.Model):
-    student = models.ForeignKey(Account, on_delete=models.CASCADE)
+    # student = models.ForeignKey(Account, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     date_of_birth = models.CharField(max_length=50)

@@ -6,7 +6,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('id', 'student', 'first_name', 'last_name', 'date_of_birth', 'student_image', 'group', 'is_have', 'created_date')
+        fields = ('id', 'first_name', 'last_name', 'date_of_birth', 'student_image', 'group', 'is_have', 'created_date')
 
 
 class GroupSerializer(serializers.ModelSerializer):

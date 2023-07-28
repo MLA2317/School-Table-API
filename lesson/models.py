@@ -24,7 +24,7 @@ class LessonRoom(models.Model):
 
 
 class Teacher(models.Model):
-    teacher = models.ForeignKey(Account, on_delete=models.CASCADE)
+    # teacher = models.ForeignKey(Account, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     subject_taught = models.CharField(max_length=50)

@@ -47,3 +47,21 @@ class TableItemPOSTSerializer(serializers.ModelSerializer):
     class Meta:
         model = TableItem
         fields = ('id', 'shift', 'week', 'group', 'lesson', 'time')
+
+
+class TableGETSerializer(serializers.ModelSerializer):
+    table_id = TableItemGETSerializer(read_only=True)
+
+    class Meta:
+        model = Table
+        fields = ('id', 'table_id', 'created_date')
+
+
+class TablePOSTSerializer(serializers.ModelSerializer):
+    table_id = serializers.PrimaryKeyRelatedField(queryset=TableItem.objects.all())
+
+    class Meta:
+        model = Table
+        fields = ('id', 'table_id', 'created_date')
+
+
