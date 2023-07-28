@@ -17,7 +17,7 @@ class LessonRomSerializer(serializers.ModelSerializer):
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
-        fields = ('id', 'teacher', 'first_name', 'last_name', 'subject_taught', 'level', 'teacher_img', 'created_date')
+        fields = ('id', 'first_name', 'last_name', 'subject_taught', 'level', 'teacher_img', 'created_date')
 
 
 class LessonSerializer(serializers.ModelSerializer):
