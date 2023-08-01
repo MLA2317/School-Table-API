@@ -1,54 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container my-5">
-        <table class="table">
-            <thead class="table-dark">
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Week</th>
-                <th scope="col">Group</th>
-                <th scope="col">Para 1</th>
-                <th scope="col">Para 2</th>
-                <th scope="col">Para 3</th>
-                 <th scope="col">Time</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Monday</td>
-                <td>9-A</td>
-                 <td>Mark</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Tuesday</td>
-                <td>9-A</td>
-                <td>@fat</td>
-                <td>@fat</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Wednesday</td>
-                <td>9-A</td>
-                <td>@twitter</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Week</th>
+                        <th scope="col">PARA</th>
+                        {% for group in groups %}
+                            <th scope="col">{{ group }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
 
-            </tr>
-             <tr>
-                <th scope="row">4</th>
-                <td>Thursday</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                 <td>@mdo</td>
-                 <td>@mdo</td>
-            </tr>
-            </tbody>
-        </table>
+                {% for table in tables %}
+                    <tr>
+                        <td>{{ table.week }}</td>
+                        <td>{{ table.shift }}</td>
+                        <td>{{ table.table_id.lesson }} - {{ table.table_id.time }}</td>
+                        <td></td>
+                    </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
     </div>
-
 {% endblock %}
+
+
+{#{% extends 'base.html' %}#}
+{#{% block content %}#}
+{#    <div class="container my-5">#}
+{#        <table class="table">#}
+{#            <thead class="table-dark">#}
+{#                <tr>#}
+{#                    <th scope="col">Lesson</th>#}
+{#                    <th scope="col">Group</th>#}
+{#                    <th scope="col">ID</th>#}
+{#                </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#            {% for lesson, tables in grouped_tables.items %}#}
+{#                <tr>#}
+{#                    <td rowspan="{{ tables|length }}">{{ lesson }}</td>#}
+{#                    {% for table in tables %}#}
+{#                        <td>{{ table.group.name }}</td>#}
+{#                        <td>{{ table.id }}</td>#}
+{#                    </tr>#}
+{#                    {% if not forloop.last %}#}
+{#                    <tr>{% endif %}#}
+{#                    {% endfor %}#}
+{#            {% endfor %}#}
+{#            </tbody>#}
+{#        </table>#}
+{#    </div>#}
+{#{% endblock %}#}
+

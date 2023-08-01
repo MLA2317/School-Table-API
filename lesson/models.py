@@ -49,6 +49,6 @@ class Lesson(models.Model):
     time = models.CharField(max_length=10)
 
     def __str__(self):
-        return f"Xona: {self.lesson_num} || Mavzu: {self.subject_id} -> {self.duration}"
+        return f"Xona: {self.lesson_num} || Fan: {self.subject_id} - {self.duration} minutes"
 
 

@@ -4,5 +4,6 @@ from .view import index
 app_name = 'mvt'
 
 urlpatterns = [
-    path('index/', index, name='index')
+    # path('', index, name='index')
+    path('', index,  name='table'),
 ]
