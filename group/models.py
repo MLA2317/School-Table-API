@@ -16,7 +16,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     date_of_birth = models.CharField(max_length=50)
-    student_image = models.ImageField(upload_to='student_img/', null=True, blank=True)
+    student_image = models.ImageField(upload_to='group/student_img/', null=True, blank=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='students')
     is_have = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)

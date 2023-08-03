@@ -1,57 +1,107 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container my-5">
-            <table class="table">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Week</th>
-                        <th scope="col">PARA</th>
-                        {% for group in groups %}
-                            <th scope="col">{{ group }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
+     <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
 
-                {% for table in tables %}
-                    <tr>
-                        <td>{{ table.week }}</td>
-                        <td>{{ table.shift }}</td>
-                        <td>{{ table.table_id.lesson }} - {{ table.table_id.time }}</td>
-                        <td></td>
-                    </tr>
-                 {% endfor %}
-                </tbody>
-            </table>
+            table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                color: #4a4a4d;
+                font: 14px/1 'Open Sans', sans-serif;
+                box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+                border-radius: 6px;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+            }
+
+            th {
+                background-color: #ff5722;
+                color: #ffffff;
+                padding: 20px;
+                text-transform: uppercase;
+                font-size: 12px;
+                letter-spacing: 0.03em;
+                border-left: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            th:first-child {
+                border-top-left-radius: 6px;
+            }
+
+            th:last-child {
+                border-top-right-radius: 6px;
+                border-right: none;
+            }
+
+            td {
+                padding: 20px;
+                text-align: left;
+                vertical-align: middle;
+                border-right: 1px solid rgba(0, 0, 0, 0.1);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            td:last-child {
+                border-right: 0;
+            }
+
+            td:first-child {
+                border-top: none;
+            }
+
+            tr:last-child td {
+                border-bottom: 0;
+            }
+
+            tr:last-child td:first-child {
+                border-bottom-left-radius: 6px;
+            }
+
+            tr:last-child td:last-child {
+                border-bottom-right-radius: 6px;
+            }
+        </style>
+    <div class="container my-5">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Week</th>
+                <th>Time</th>
+                {% for group in groups %}
+                    <th>{{ group }}</th>
+                {% endfor %}
+            </tr>
+            {% for week in weeks %}
+                    {% for table_item in week.table_items.all %}
+                        {% if forloop.first %}
+                            <tr>
+                                <td rowspan="{{ week.table_items.all.count }}">{{ week.id }}</td>
+                                <td rowspan="{{ week.table_items.all.count }}">{{ week }}</td>
+                                <td>{{ table_item.times}}</td>
+                                {% for group in groups %}
+                                    <td>
+                                        {% if group == table_item.group %}
+                                            {{ table_item.lesson }}
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td>{{ table_item.times }}</td>
+                                {% for group in groups %}
+                                    <td>
+                                        {% if group == table_item.group %}
+                                            {{ table_item.lesson }}
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}
-
-
-{#{% extends 'base.html' %}#}
-{#{% block content %}#}
-{#    <div class="container my-5">#}
-{#        <table class="table">#}
-{#            <thead class="table-dark">#}
-{#                <tr>#}
-{#                    <th scope="col">Lesson</th>#}
-{#                    <th scope="col">Group</th>#}
-{#                    <th scope="col">ID</th>#}
-{#                </tr>#}
-{#            </thead>#}
-{#            <tbody>#}
-{#            {% for lesson, tables in grouped_tables.items %}#}
-{#                <tr>#}
-{#                    <td rowspan="{{ tables|length }}">{{ lesson }}</td>#}
-{#                    {% for table in tables %}#}
-{#                        <td>{{ table.group.name }}</td>#}
-{#                        <td>{{ table.id }}</td>#}
-{#                    </tr>#}
-{#                    {% if not forloop.last %}#}
-{#                    <tr>{% endif %}#}
-{#                    {% endfor %}#}
-{#            {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </div>#}
-{#{% endblock %}#}
-

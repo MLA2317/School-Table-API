@@ -1,16 +1,10 @@
 from rest_framework import serializers
-from .models import Table, TableItem, Week
+from .models import Table, TableItem, Week, Time
 from group.models import Group
 from lesson.models import Lesson
 from group.serializer import GroupSerializer
 from lesson.serializer import SubjectSerializer, LessonRomSerializer
 from lesson.serializer import LessonSerializer
-
-
-class WeekSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Week
-        fields = ('id', 'title')
 
 
 class SimpleGroupSerializer(serializers.ModelSerializer):
@@ -29,41 +23,54 @@ class SimpleLessonSerializer(serializers.ModelSerializer):
         fields = ('id', 'lesson_num', 'subject_id', 'teach_id', 'duration', 'time')
 
 
+class TimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Time
+        fields = ('id', 'time')
+
+
+class WeekSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Week
+        fields = ('id', 'title')
+
+
 class TableItemGETSerializer(serializers.ModelSerializer):
     group = SimpleGroupSerializer(read_only=True)
     lesson = SimpleLessonSerializer(read_only=True)
-    # week = WeekSerializer(read_only=True)
+    week = WeekSerializer(read_only=True)
+    times = TimeSerializer(read_only=True)
 
     class Meta:
         model = TableItem
-        fields = ('id', 'group', 'lesson', 'time')
+        fields = ('id', 'week', 'group', 'lesson', 'times')
 
 
 class TableItemPOSTSerializer(serializers.ModelSerializer):
-    # week = serializers.PrimaryKeyRelatedField(queryset=Week.objects.all())
+    week = serializers.PrimaryKeyRelatedField(queryset=Week.objects.all())
     group = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all())
     lesson = serializers.PrimaryKeyRelatedField(queryset=Lesson.objects.all())
 
     class Meta:
         model = TableItem
-        fields = ('id', 'group', 'lesson', 'time')
+        fields = ('id', 'week', 'group', 'lesson', 'times')
 
 
 class TableGETSerializer(serializers.ModelSerializer):
-    week = WeekSerializer(read_only=True)
+    # week = WeekSerializer(read_only=True)
     table_id = TableItemGETSerializer(read_only=True)
 
     class Meta:
         model = Table
-        fields = ('id', 'shift', 'week', 'table_id', 'created_date')
+        fields = ('id', 'shift', 'table_id', 'created_date')
 
 
 class TablePOSTSerializer(serializers.ModelSerializer):
-    week = serializers.PrimaryKeyRelatedField(queryset=Week.objects.all())
+    # week = serializers.PrimaryKeyRelatedField(queryset=Week.objects.all())
     table_id = serializers.PrimaryKeyRelatedField(queryset=TableItem.objects.all())
 
     class Meta:
         model = Table
-        fields = ('id', 'shift', 'week', 'table_id', 'created_date')
+        fields = ('id', 'shift', 'table_id', 'created_date')
 
 
